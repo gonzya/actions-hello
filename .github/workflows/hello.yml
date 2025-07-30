@@ -29,4 +29,8 @@ jobs:
           RAKUTEN_ID: ${{ secrets.RAKUTEN_ID }}
           RAKUTEN_PASS: ${{ secrets.RAKUTEN_PASS }}
         run: |
-          python room_poster.py --headless
+    python room_poster.py            # デフォルトで headless
+# もし「画面あり」でデバッグしたいなら
+#   python room_poster.py --no-headless
+
+
