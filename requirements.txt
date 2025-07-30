@@ -1,0 +1,6 @@
+selenium==4.34.2
+webdriver-manager==4.0.2
+python-dotenv
+schedule
+beautifulsoup4
+requests
