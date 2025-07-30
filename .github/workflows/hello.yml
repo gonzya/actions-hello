@@ -1,0 +1,17 @@
+name: Hello World Demo      # ワークフロー名
+
+on:
+  workflow_dispatch:        # 手動実行トリガー
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest  # GitHub が用意した Ubuntu 仮想マシン
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: メッセージを表示
+        run: |
+          echo "✅ こんにちは GitHub Actions！"
+          date
