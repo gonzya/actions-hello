@@ -1,17 +1,32 @@
-name: Hello World Demo      # ワークフロー名
+name: Room Poster Bot        # ワークフロー名
 
 on:
-  workflow_dispatch:        # 手動実行トリガー
+  workflow_dispatch:         # 手動実行
+  schedule:                  # 毎日 07:05, 15:00, 22:30 に実行
+    - cron: '5 22 * * *'
+    - cron: '0 6 * * *'
+    - cron: '30 13 * * *'
 
 jobs:
-  hello:
-    runs-on: ubuntu-latest  # GitHub が用意した Ubuntu 仮想マシン
+  post:
+    runs-on: ubuntu-latest
 
     steps:
       - name: リポジトリをチェックアウト
         uses: actions/checkout@v4
 
-      - name: メッセージを表示
+      - name: Python をセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 必要ライブラリをインストール
         run: |
-          echo "✅ こんにちは GitHub Actions！"
-          date
+          pip install -r requirements.txt
+
+      - name: 自動投稿スクリプトを実行
+        env:                       # ← GitHub Secrets で設定
+          RAKUTEN_ID: ${{ secrets.RAKUTEN_ID }}
+          RAKUTEN_PASS: ${{ secrets.RAKUTEN_PASS }}
+        run: |
+          python room_poster.py --headless
