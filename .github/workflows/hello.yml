@@ -1,18 +1,20 @@
-name: ルームポスターボット
+名前: ルームポスターボット
 
 on:
-  workflow_dispatch:        # 手動
-  schedule:
-    - cron: '5 22 * * *'    # 例) 毎日 07:05JST
+  workflow_dispatch:          # 手動実行
+  schedule:                   # 毎日 07:05/15:00/22:30 に自動実行
+    - cron:  '5 22 * * *'
+    - cron:  '0 6 * * *'
+    - cron:  '30 13 * * *'
 
 jobs:
   post:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Windows, X64]   # ← ここを **必ず** 修正
     steps:
       - name: リポジトリをチェックアウト
         uses: actions/checkout@v4
 
-      - name: Python 3.11 セットアップ
+      - name: Python をセットアップする
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -24,4 +26,5 @@ jobs:
         env:
           RAKUTEN_ID:   ${{ secrets.RAKUTEN_ID }}
           RAKUTEN_PASS: ${{ secrets.RAKUTEN_PASS }}
-        run: python room_poster.py
+        run: |
+          python room_poster.py --no-headless
