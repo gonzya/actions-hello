@@ -122,7 +122,7 @@ def one_shot(headless=True):
         create_post(d, prod)
         print(f"[{datetime.now():%F %T}] 投稿完了: {prod['name']}")
     finally:
-        input("👀 画面を確認したら Enter を押してください…")   # ←★追加ここ
+    
         d.quit()
 
 ########################## ⑦ 定期実行 ##########################
