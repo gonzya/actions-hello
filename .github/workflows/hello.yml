@@ -29,4 +29,4 @@ jobs:
           RAKUTEN_PASS: ${{ secrets.RAKUTEN_PASS }}
           ROOM_COOKIE:  ${{ secrets.ROOM_COOKIE }}
         run: |
-          python room_poster.py --headless   # 1 行目は半角 10 文字分インデント
+          python room_poster.py    # 1 行目は半角 10 文字分インデント
