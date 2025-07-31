@@ -1,32 +1,27 @@
-name: ルームポスターボット          # ← コメントは日本語で OK
+name: ルームポスターボット
 
 on:
-  workflow_dispatch:              # 手動実行トリガー
-  schedule:                       # 1 日 3 回実行
-    - cron: '5 22 * * *'          # (日本時間 07:05)
-    - cron: '6 0 * * *'           # (15:00)
-    - cron: '30 13 * * *'         # (22:30)
+  workflow_dispatch:        # 手動
+  schedule:
+    - cron: '5 22 * * *'    # 例) 毎日 07:05JST
 
 jobs:
-  post:                           # ← ジョブ識別子（自由名、英数字）
+  post:
     runs-on: ubuntu-latest
-
     steps:
       - name: リポジトリをチェックアウト
         uses: actions/checkout@v4
 
-      - name: Python をセットアップ
+      - name: Python 3.11 セットアップ
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'  # クォートは半角シングル
+          python-version: '3.11'
 
-      - name: 必要なライブラリをインストール
+      - name: 依存ライブラリをインストール
         run: pip install -r requirements.txt
 
       - name: 自動投稿スクリプトを実行
-        env:                      # GitHub → Settings → Secrets に登録した値
+        env:
           RAKUTEN_ID:   ${{ secrets.RAKUTEN_ID }}
           RAKUTEN_PASS: ${{ secrets.RAKUTEN_PASS }}
-          ROOM_COOKIE:  ${{ secrets.ROOM_COOKIE }}
-        run: |
-          python room_poster.py    # 1 行目は半角 10 文字分インデント
+        run: python room_poster.py
